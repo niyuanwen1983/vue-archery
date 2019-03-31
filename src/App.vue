@@ -1,15 +1,15 @@
 <template>
   <div>
-    <mt-header fixed :title="title[0]"></mt-header>
+    <mt-header fixed :title="showTitle"></mt-header>
     <router-view style="margin-top:40px;"></router-view>
     <mt-tabbar v-model="selected">
       <mt-tab-item id="training" :class="{ tab_selected: selected === 'training' }">
         <!--<img slot="icon" src="../assets/100x100.png">-->
-          习射
+        习射
       </mt-tab-item>
       <mt-tab-item id="score" :style="{color: selected === 'score' ? 'red !important':'black !important' }">
         <!--<img slot="icon" src="../assets/100x100.png">-->
-          成绩
+        成绩
       </mt-tab-item>
       <mt-tab-item id="aboutme" :style="{color: selected === 'aboutme' ? 'red !important':'black !important' }">
         <!--<img slot="icon" src="../assets/100x100.png">-->
@@ -25,8 +25,8 @@
     data() {
       return {
         title: ['练习设定', '成绩图表', '我的'],
-        selected: 'training',
-        selectedTabItem: 0
+        showTitle: '练习设定',
+        selected: 'training'
       }
     },
     methods: {},
@@ -36,6 +36,14 @@
         console.log(val)
 
         this.selected = val
+
+        if (val === 'training') {
+          this.showTitle = '练习设定'
+        } else if (val === 'score') {
+          this.showTitle = '成绩图表'
+        } else {
+          this.showTitle = '我的'
+        }
 
         this.$router.push({path: '/' + val})
       }
