@@ -1,8 +1,12 @@
 <template>
   <div>
-    <mt-header fixed :title="showTitle"></mt-header>
-    <router-view style="margin-top:40px;"></router-view>
-    <mt-tabbar v-model="selected">
+    <mt-header fixed :title="showTitle">
+      <router-link to="/" slot="left" v-if="isShowBack">
+        <mt-button icon="back">返回</mt-button>
+      </router-link>
+    </mt-header>
+    <router-view style="margin:40px 0;"></router-view>
+    <mt-tabbar class="mint-tabbar" v-model="selected">
       <mt-tab-item id="training" :class="{ tab_selected: selected === 'training' }">
         <!--<img slot="icon" src="../assets/100x100.png">-->
         习射
@@ -26,7 +30,8 @@
       return {
         title: ['练习设定', '成绩图表', '我的'],
         showTitle: '练习设定',
-        selected: 'training'
+        selected: 'training',
+        isShowBack: false
       }
     },
     methods: {},
@@ -37,15 +42,32 @@
 
         this.selected = val
 
-        if (val === 'training') {
+        /*if (val === 'training') {
           this.showTitle = '练习设定'
         } else if (val === 'score') {
           this.showTitle = '成绩图表'
         } else {
           this.showTitle = '我的'
-        }
+        }*/
 
         this.$router.push({path: '/' + val})
+      },
+      $route: {
+        handler: function (val, oldVal) {
+          this.isShowBack = false
+          if (val.path === '/training') {
+            this.showTitle = '练习设定'
+          } else if (val.path === '/Regist') {
+            this.showTitle = '成绩登录'
+            this.isShowBack = true
+          } else if (val.path === '/score') {
+            this.showTitle = '成绩图表'
+          } else {
+            this.showTitle = '我的'
+          }
+        },
+        // 深度观察监听
+        deep: true
       }
     }
   }
@@ -65,5 +87,9 @@
 
   .tab_selected {
     color: red !important;
+  }
+
+  .mint-tabbar {
+    position: fixed;
   }
 </style>
