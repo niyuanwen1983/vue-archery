@@ -35,6 +35,11 @@
       }
     },
     methods: {},
+    mounted() {
+      if (this.$route.path === '/Regist') {
+        this.isShowBack = true
+      }
+    },
     watch: {
       selected: function (val, oldVal) {
         // 这里就可以通过 val 的值变更来确定
