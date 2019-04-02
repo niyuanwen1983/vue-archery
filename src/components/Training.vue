@@ -4,6 +4,8 @@
     <mt-picker :slots="slots" @change="onValuesChange"></mt-picker>
     靶纸
     <mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>
+    场地
+    <mt-picker :slots="slots3" @change="onValuesChange3"></mt-picker>
     <mt-button class="btn-center" type="primary" @click="gotoRegist">设定完毕，开始练习</mt-button>
   </div>
 </template>
@@ -27,6 +29,15 @@
             flex: 1,
             values: ['60靶半环', '60靶全环', '80靶半环', '80靶全环'],
             className: 'slot2',
+            textAlign: 'center',
+            defaultIndex: 0
+          }
+        ],
+        slots3: [
+          {
+            flex: 1,
+            values: ['室内', '室外'],
+            className: 'slot3',
             textAlign: 'center',
             defaultIndex: 0
           }
