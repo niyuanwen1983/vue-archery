@@ -7,15 +7,15 @@
     </mt-header>
     <router-view style="margin:40px 0;"></router-view>
     <mt-tabbar class="mint-tabbar" v-model="selected">
-      <mt-tab-item id="training" :class="{ tab_selected: selected === 'training' }">
+      <mt-tab-item id="Training" :class="{ tab_selected: selected === 'Training' }">
         <!--<img slot="icon" src="../assets/100x100.png">-->
         习射
       </mt-tab-item>
-      <mt-tab-item id="score" :style="{color: selected === 'score' ? 'red !important':'black !important' }">
+      <mt-tab-item id="score" :style="{color: selected === 'Score' ? 'red !important':'black !important' }">
         <!--<img slot="icon" src="../assets/100x100.png">-->
         成绩
       </mt-tab-item>
-      <mt-tab-item id="aboutme" :style="{color: selected === 'aboutme' ? 'red !important':'black !important' }">
+      <mt-tab-item id="aboutme" :style="{color: selected === 'Aboutme' ? 'red !important':'black !important' }">
         <!--<img slot="icon" src="../assets/100x100.png">-->
         我的
       </mt-tab-item>
@@ -29,8 +29,8 @@
     data() {
       return {
         title: ['练习设定', '成绩图表', '我的'],
-        showTitle: '练习设定',
-        selected: 'training',
+        showTitle: '',
+        selected: 'Training',
         isShowBack: false
       }
     },
@@ -38,6 +38,11 @@
     mounted() {
       if (this.$route.path === '/Regist') {
         this.isShowBack = true
+        this.showTitle = '成绩登录'
+      } else if (this.$route.path === '/') {
+        this.showTitle = '练习设定'
+      } else if (this.$route.path === '/Aboutme') {
+        this.showTitle = '我的'
       }
     },
     watch: {
@@ -55,12 +60,16 @@
           this.showTitle = '我的'
         }*/
 
-        this.$router.push({path: '/' + val})
+        if (val === 'Training') {
+          this.$router.push({path: '/'})
+        } else {
+          this.$router.push({path: '/' + val})
+        }
       },
       $route: {
         handler: function (val, oldVal) {
           this.isShowBack = false
-          if (val.path === '/training') {
+          if (val.path === '/') {
             this.showTitle = '练习设定'
           } else if (val.path === '/Regist') {
             this.showTitle = '成绩登录'

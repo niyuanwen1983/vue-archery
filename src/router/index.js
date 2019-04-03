@@ -14,11 +14,6 @@ export default new Router({
       component: Training
     },
     {
-      path: '/Training',
-      name: 'Training',
-      component: Training
-    },
-    {
       path: '/Regist',
       name: 'Regist',
       component: Regist
