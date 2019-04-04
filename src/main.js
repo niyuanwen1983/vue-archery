@@ -8,6 +8,11 @@ import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css'
 Vue.use(Mint);
 
+//import indexDB from './common/indexDB'
+//Vue.prototype.$indexDB = indexDB.install;
+import indexDB from "./common/indexDB"
+Vue.use(indexDB);
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
