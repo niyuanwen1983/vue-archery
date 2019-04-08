@@ -3,7 +3,7 @@
     距离
     <mt-picker :slots="slots" @change="onValuesChange"></mt-picker>靶纸
     <mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>场地
-    <mt-picker :slots="slots3"></mt-picker>
+    <mt-picker :slots="slots3" @change="onValuesChange3"></mt-picker>
     <mt-button class="btn-center" type="primary" @click="gotoRegist">设定完毕，开始练习</mt-button>
   </div>
 </template>
@@ -14,6 +14,9 @@ export default {
   name: "Training",
   data() {
     return {
+      distance: "18米",
+      goalRange: "60靶半环",
+      inOut: true, //true:室内;false:室外
       slots: [
         {
           flex: 1,
@@ -55,15 +58,45 @@ export default {
     };
   },
   methods: {
+    //https://blog.csdn.net/chenzlyan/article/details/83306603
     onValuesChange(picker, values) {
-      /*if (values[0] > values[1]) {
-          picker.setSlotValue(1, values[0]);
-        }*/
+      this.distance = values;
     },
-    onValuesChange2(picker, values) {},
+    onValuesChange2(picker, values) {
+      this.goalrange = values[0] + values[1];
+    },
+    onValuesChange3(picker, values) {
+      if (values[0] === "室内") {
+        this.inOut = true;
+      } else {
+        this.inOut = false;
+      }
+    },
     gotoRegist() {
-      Vue.prototype.$indexDB.openDB(Vue.prototype.$myDB, function() {
-        console.log('success!');
+      Vue.prototype.$indexDB.openDB(Vue.prototype.$myDB, () => {
+        console.log("success!");
+
+        let l_id = Math.round(Math.random() * 10000);
+        let l_datetime = new Date();
+        let l_distance = this.distance;
+        let l_goalrange = this.goalRange;
+        let l_inout = this.inOut;
+
+        let trainingData = [
+          {
+            id: l_id,
+            datetime: l_datetime,
+            distance: l_distance,
+            goalrange: l_goalrange,
+            inout: l_inout,
+            scores: []
+          }
+        ];
+        Vue.prototype.$indexDB.addData(
+          Vue.prototype.$myDB.db,
+          Vue.prototype.$myDB.ojstore.name,
+          trainingData
+        );
       });
 
       this.$router.push({ path: "/Regist" });
