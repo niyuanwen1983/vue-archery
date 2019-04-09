@@ -67,7 +67,7 @@
       </div>
     </div>
     <div class="row-btn">
-      <mt-button class="btn-center" type="primary">提交并进入下一组练习</mt-button>
+      <mt-button class="btn-center" type="primary" @click="registScore()">提交并进入下一组练习</mt-button>
     </div>
     <div class="row-btn">
       <mt-button class="btn-center" type="danger" @click="overAndSubmit()">提交并结束练习</mt-button>
@@ -115,6 +115,9 @@ export default {
       if (this.valuesArr[val] > 0) {
         Vue.set(this.valuesArr, val, this.valuesArr[val] - 1);
       }
+    },
+    registScore() {
+      this.$store.dispatch("registScoreDataAction", this.total1);
     },
     overAndSubmit() {
       //this.$store.commit("overTraining");

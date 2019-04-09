@@ -91,6 +91,15 @@ export default {
         let l_goalrange = this.goalRange;
         let l_inout = this.inOut;
 
+        let tempData = {
+          id: l_id,
+          datetime: l_datetime,
+          distance: l_distance,
+          goalrange: l_goalrange,
+          inout: l_inout,
+          scores: []
+        };
+
         let trainingData = [
           {
             id: l_id,
@@ -101,6 +110,11 @@ export default {
             scores: []
           }
         ];
+
+        //写入vuex
+        this.$store.dispatch("initCurrentDataAction", tempData);
+
+        //写入indexeddb数据库
         Vue.prototype.$indexDB.addData(
           Vue.prototype.$myDB.db,
           Vue.prototype.$myDB.ojstore.name,
