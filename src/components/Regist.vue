@@ -70,101 +70,106 @@
       <mt-button class="btn-center" type="primary">提交并进入下一组练习</mt-button>
     </div>
     <div class="row-btn">
-      <mt-button class="btn-center" type="danger">提交并结束练习</mt-button>
+      <mt-button class="btn-center" type="danger" @click="overAndSubmit()">提交并结束练习</mt-button>
     </div>
   </div>
 </template>
 
 <script>
-  import Vue from 'vue'
+import Vue from "vue";
 
-  export default {
-    name: 'Regist',
-    computed: {
-      total2() {
-        let res = 0
-        for (let i = 0; i < this.valuesArr.length; i++) {
-          if (i != 11) {
-            res += this.valuesArr[i] * i;
-          } else {
-            res += this.valuesArr[i] * 10;
-          }
-        }
-        return res
-      }
-    },
-    created() {
-    },
-    mounted() {
-      window.scrollTo(0, 0)
-    },
-    data() {
-      return {
-        inputType: true,
-        total1: '',
-        //total2: 0,
-        valuesArr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-      }
-    },
-    methods: {
-      addScore(val) {
-        //this.value11 = this.value11 + 1
-        //this.valuesArr[val] = this.valuesArr[val] + 1
-        Vue.set(this.valuesArr, val, this.valuesArr[val] + 1)
-      },
-      minusScore(val) {
-        if (this.valuesArr[val] > 0) {
-          Vue.set(this.valuesArr, val, this.valuesArr[val] - 1)
+export default {
+  name: "Regist",
+  computed: {
+    total2() {
+      let res = 0;
+      for (let i = 0; i < this.valuesArr.length; i++) {
+        if (i != 11) {
+          res += this.valuesArr[i] * i;
+        } else {
+          res += this.valuesArr[i] * 10;
         }
       }
+      return res;
+    }
+  },
+  created() {},
+  mounted() {
+    window.scrollTo(0, 0);
+  },
+  data() {
+    return {
+      inputType: true,
+      total1: "",
+      //total2: 0,
+      valuesArr: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    };
+  },
+  methods: {
+    addScore(val) {
+      //this.value11 = this.value11 + 1
+      //this.valuesArr[val] = this.valuesArr[val] + 1
+      Vue.set(this.valuesArr, val, this.valuesArr[val] + 1);
+    },
+    minusScore(val) {
+      if (this.valuesArr[val] > 0) {
+        Vue.set(this.valuesArr, val, this.valuesArr[val] - 1);
+      }
+    },
+    overAndSubmit() {
+      //this.$store.commit("overTraining");
+      this.$store.dispatch("overTrainingAction");
+
+      this.$router.push({ path: "/" });
     }
   }
+};
 </script>
 
 <style scoped>
-  .row-score {
-    margin: 20px 0 0 0;
-    text-align: center;
-  }
+.row-score {
+  margin: 20px 0 0 0;
+  text-align: center;
+}
 
-  .btn {
-    border: 1px solid black;
-    color: #000000;
-    margin: 0 4px;
-    width: 44px;
-  }
+.btn {
+  border: 1px solid black;
+  color: #000000;
+  margin: 0 4px;
+  width: 44px;
+}
 
-  .btn-yellow {
-    background-color: yellow;
-  }
+.btn-yellow {
+  background-color: yellow;
+}
 
-  .btn-red {
-    background-color: red;
-  }
+.btn-red {
+  background-color: red;
+}
 
-  .btn-blue {
-    background-color: blue;
-  }
+.btn-blue {
+  background-color: blue;
+}
 
-  .btn-black {
-    background-color: black;
-    color: white;
-  }
+.btn-black {
+  background-color: black;
+  color: white;
+}
 
-  .btn-white {
-    background-color: white;
-  }
+.btn-white {
+  background-color: white;
+}
 
-  .score-result {
-    margin: 20px 0 0 0;
-  }
+.score-result {
+  margin: 20px 0 0 0;
+}
 
-  .row-result {
-    margin: 20px 0 0 0;
-  }
+.row-result {
+  margin: 20px 0 0 0;
+}
 
-  .row-btn {
-    margin: 20px 0 0 0;
-    text-align: center;
-  }
+.row-btn {
+  margin: 20px 0 0 0;
+  text-align: center;
+}
 </style>

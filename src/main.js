@@ -13,12 +13,15 @@ Vue.use(Mint);
 import indexDB from "./common/indexDB"
 Vue.use(indexDB);
 
+import store from './store'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

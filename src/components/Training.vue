@@ -4,7 +4,13 @@
     <mt-picker :slots="slots" @change="onValuesChange"></mt-picker>靶纸
     <mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>场地
     <mt-picker :slots="slots3" @change="onValuesChange3"></mt-picker>
-    <mt-button class="btn-center" type="primary" @click="gotoRegist">设定完毕，开始练习</mt-button>
+    <mt-button
+      class="btn-center"
+      type="primary"
+      @click="gotoRegist"
+      v-if="!this.$store.state.isTraining"
+    >设定完毕，开始练习</mt-button>
+    <mt-button class="btn-center" type="danger" @click="doRegist" v-else>登录成绩</mt-button>
   </div>
 </template>
 
@@ -73,6 +79,9 @@ export default {
       }
     },
     gotoRegist() {
+      //this.$store.commit("doTraining");
+      this.$store.dispatch("doTrainingAction");
+
       Vue.prototype.$indexDB.openDB(Vue.prototype.$myDB, () => {
         console.log("success!");
 
@@ -99,6 +108,9 @@ export default {
         );
       });
 
+      this.$router.push({ path: "/Regist" });
+    },
+    doRegist() {
       this.$router.push({ path: "/Regist" });
     }
   }
