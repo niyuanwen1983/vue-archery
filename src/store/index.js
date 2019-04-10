@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
+        trainingIndex: 1,
         isTraining: false,//是否正在练习中
         currentData: null
     },
@@ -22,6 +23,7 @@ const store = new Vuex.Store({
             this.state.currentData = payload
         },
         registScoreData(state, payload) {
+            this.state.trainingIndex++
             this.state.currentData.scores.push(payload)
         }
     },

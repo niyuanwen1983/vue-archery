@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div style="text-align:center;">第{{this.$store.state.trainingIndex}}组</div>
     <mt-cell title="仅输入成绩">
       <mt-switch v-model="inputType"></mt-switch>
     </mt-cell>
@@ -77,6 +78,7 @@
 
 <script>
 import Vue from "vue";
+import * as common from "../common/common";
 
 export default {
   name: "Regist",
@@ -117,7 +119,13 @@ export default {
       }
     },
     registScore() {
-      this.$store.dispatch("registScoreDataAction", this.total1);
+      if (common.isEmpty(this.total1)) {
+        Vue.$messagebox("提示", "请输入总成绩！");
+      } else {
+        this.$store.dispatch("registScoreDataAction", this.total1);
+        this.total1 = "";
+        Vue.$messagebox("提示", "输入成功！开始下一组练习。");
+      }
     },
     overAndSubmit() {
       //this.$store.commit("overTraining");

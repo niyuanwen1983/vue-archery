@@ -15,6 +15,10 @@ Vue.use(indexDB);
 
 import store from './store'
 
+// 引入echarts
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts 
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
