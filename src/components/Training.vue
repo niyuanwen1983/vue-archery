@@ -1,7 +1,7 @@
 <template>
   <div>
     距离
-    <mt-picker :slots="slots" @change="onValuesChange"></mt-picker>靶纸
+    <mt-picker :slots="slots" value-key="name" @change="onValuesChange"></mt-picker>靶纸
     <mt-picker :slots="slots2" @change="onValuesChange2"></mt-picker>场地
     <mt-picker :slots="slots3" @change="onValuesChange3"></mt-picker>
     <mt-button
@@ -16,6 +16,8 @@
 
 <script>
 import Vue from "vue";
+import { mapActions } from "vuex";
+
 export default {
   name: "Training",
   data() {
@@ -26,7 +28,24 @@ export default {
       slots: [
         {
           flex: 1,
-          values: ["18米", "20米", "30米"],
+          //values: ["18米", "20米", "30米"],
+          values: [
+            {
+              index: 0,
+              code: "0",
+              name: "18米"
+            },
+            {
+              index: 1,
+              code: "1",
+              name: "20米"
+            },
+            {
+              index: 2,
+              code: "2",
+              name: "30米"
+            }
+          ],
           className: "slot1",
           textAlign: "center",
           defaultIndex: 1
@@ -64,9 +83,9 @@ export default {
     };
   },
   methods: {
-    //https://blog.csdn.net/chenzlyan/article/details/83306603
+    ...mapActions(["doTrainingAction", "initCurrentDataAction"]),
     onValuesChange(picker, values) {
-      this.distance = values;
+      this.distance = values[0].name;
     },
     onValuesChange2(picker, values) {
       this.goalrange = values[0] + values[1];
@@ -79,12 +98,10 @@ export default {
       }
     },
     gotoRegist() {
-      //this.$store.commit("doTraining");
-      this.$store.dispatch("doTrainingAction");
+      //this.$store.dispatch("doTrainingAction");
+      this.doTrainingAction();
 
       Vue.prototype.$indexDB.openDB(Vue.prototype.$myDB, () => {
-        console.log("success!");
-
         let l_id = Math.round(Math.random() * 10000);
         let l_datetime = new Date();
         let l_distance = this.distance;
@@ -112,7 +129,8 @@ export default {
         ];
 
         //写入vuex
-        this.$store.dispatch("initCurrentDataAction", tempData);
+        //this.$store.dispatch("initCurrentDataAction", tempData);
+        this.initCurrentDataAction(tempData);
 
         //写入indexeddb数据库
         Vue.prototype.$indexDB.addData(

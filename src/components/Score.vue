@@ -16,7 +16,8 @@ export default {
     };
   },
   mounted() {
-    if (common.isEmpty(this.$store.state.currentData)) {
+    //if (common.isEmpty(this.$store.state.currentData)) {
+    if (this.$store.state.currentData != null) {
       this.$store.state.currentData.scores.forEach((element, index) => {
         this.xArr.push(index + 1);
         this.yArr.push(element);
