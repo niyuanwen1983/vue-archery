@@ -27,7 +27,7 @@ let indexDB = {
         request.onsuccess = function (e) {
             myDB.db = e.target.result;
             console.log('成功建立并打开数据库:' + myDB.name + ' version' + version);
-            callback();
+            callback(db);
         };
 
         request.onupgradeneeded = function (e) {
@@ -74,7 +74,7 @@ let indexDB = {
             };
         }
     },
-    putData: function (db, storename, data) {
+    /*putData: function (db, storename, data) {
         //添加数据，重复添加会更新原有数据
         for (var i = 0; i < data.length; i++) {
             if (data[i].id) {
@@ -92,6 +92,22 @@ let indexDB = {
                         console.log('put添加数据已存入数据库')
                     };
                 })
+            };
+        }
+    },*/
+    // 更新旧值
+    putData: function (db, storename, dataArr, callback) {
+        var store = db.transaction(storename, 'readwrite').objectStore(storename),
+            request;
+        for (var i = 0, len = dataArr.length; i < len; i++) {
+            request = store.put(dataArr[i]);
+            request.onerror = function () {
+                console.error('PUT添加数据报错');
+            };
+            request.onsuccess = function () {
+                if (callback && (typeof callback === 'function')) {
+                    callback();
+                }
             };
         }
     },
@@ -135,7 +151,6 @@ let indexDB = {
 
         console.log('已删除存储空间' + storename + '中' + key + '记录');
     },
-
     clearData: function (db, storename) {
         //删除存储空间全部记录
         var store = db.transaction(storename, 'readwrite').objectStore(storename);

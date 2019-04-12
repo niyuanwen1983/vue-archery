@@ -9,6 +9,7 @@ const store = new Vuex.Store({
         isTraining: false,//是否正在练习中
         currentData: null
     },
+    getters: {},
     mutations: {
         doTraining() {
             this.state.isTraining = true
@@ -16,7 +17,7 @@ const store = new Vuex.Store({
         },
         overTraining() {
             this.state.isTraining = false
-            //this.state.currentData = null
+            this.state.currentData = null
             console.log('over=' + this.state.isTraining)
         },
         initCurrentData(state, payload) {
@@ -34,8 +35,8 @@ const store = new Vuex.Store({
         registScoreDataAction(context, score) {
             context.commit('registScoreData', score)
         },
-        overTrainingAction(context) {
-            context.commit('overTraining')
+        overTrainingAction(context, score) {
+            context.commit('overTraining', score)
         },
         initCurrentDataAction(context, val) {
             context.commit('initCurrentData', val)

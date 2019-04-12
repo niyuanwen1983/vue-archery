@@ -78,6 +78,7 @@
 
 <script>
 import Vue from "vue";
+import { mapActions } from "vuex";
 import * as common from "../common/common";
 
 export default {
@@ -108,6 +109,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["registScoreDataAction", "overTrainingAction"]),
     addScore(val) {
       //this.value11 = this.value11 + 1
       //this.valuesArr[val] = this.valuesArr[val] + 1
@@ -122,16 +124,39 @@ export default {
       if (common.isEmpty(this.total1)) {
         Vue.$messagebox("提示", "请输入总成绩！");
       } else {
-        this.$store.dispatch("registScoreDataAction", this.total1);
+        //登录该组成绩
+        this.registScoreDataAction(this.total1);
         this.total1 = "";
         Vue.$messagebox("提示", "输入成功！开始下一组练习。");
       }
     },
     overAndSubmit() {
-      //this.$store.commit("overTraining");
-      this.$store.dispatch("overTrainingAction");
+      if (common.isEmpty(this.total1)) {
+        Vue.$messagebox("提示", "请输入总成绩！");
+      } else {
+        //登录该组成绩
+        this.registScoreDataAction(this.total1);
 
-      this.$router.push({ path: "/" });
+        //获取该次练习所有成绩
+        let currentDataArr = [];
+        currentDataArr.push(this.$store.state.currentData);
+
+        /*Vue.prototype.$indexDB.openDB(Vue.prototype.$myDB, (db) => {
+          //更新indexeddb
+          Vue.prototype.$indexDB.putData(
+            db,
+            Vue.prototype.$myDB.ojstore.name,
+            currentDataArr
+          );
+
+          //清空记录
+          this.overTrainingAction(this.total1);
+          this.total1 = "";
+          Vue.$messagebox("提示", "提交成功！").then(action => {
+            this.$router.push({ path: "/" });
+          });
+        });*/
+      }
     }
   }
 };

@@ -45,12 +45,16 @@ export default {
     if (this.$route.path === "/Regist") {
       this.isShowBack = true;
       this.showTitle = "成绩登录";
+      this.selected = "Training";
     } else if (this.$route.path === "/") {
       this.showTitle = "练习设定";
+      this.selected = "Training";
     } else if (this.$route.path === "/Score") {
       this.showTitle = "成绩图表";
+      this.selected = "Score";
     } else if (this.$route.path === "/Aboutme") {
       this.showTitle = "我的";
+      this.selected = "Aboutme";
     }
   },
   watch: {
